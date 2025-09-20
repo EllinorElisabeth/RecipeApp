@@ -3,9 +3,13 @@ import { ENV } from "./config/env.js";
 import { db } from "./config/db.js";
 import { favoriteTable } from "./db/schema.js";
 import { eq, and } from "drizzle-orm";
+import job from "./config/cron.js";
 
 const app = express();
 const PORT = ENV.PORT || 5001;
+
+// Pga Render.com gratis versjon bruker vi job (cron.js)
+if (ENV.NODE_ENV === "production") job.start();
 
 app.use(express.json()); // Uten denne linjen blir alle value på linje 18 undefined "const { userId, recipeId, title, image, cookTime, servings } = req.body;"
 
